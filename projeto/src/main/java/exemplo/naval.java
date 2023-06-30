@@ -97,19 +97,19 @@ public class naval {
                     posicaoValida = posicaoValidaVertical(tabuleiro, linha, coluna, tamanho);
                     break;
                 default:
-                    System.out.println("Orientação inválida. Tente novamente.");
+                    System.out.println("Orientação inválida");
                     continue;
             }
 
             if (!posicaoValida) {
-                System.out.println("Posição inválida. Tente novamente.");
+                System.out.println("Posição inválida");
                 continue;
             }
 
             if (orientacao == 'H') {
                 for (int j = 0; j < tamanho; j++) {
                     if (tabuleiro[linha][coluna + j] != '~') {
-                        System.out.println("Posição já ocupada por um navio. Tente novamente.");
+                        System.out.println("Posição já ocupada por um navio, Tente Novamente ");
                         barcoAlocado = false;
                         break;
                     }
@@ -203,10 +203,10 @@ public class naval {
         boolean Jogando = true;
 
         while (Jogando) {
-            System.out.println("Digite a coluna do tiro (A-J):");
+            System.out.println("Digite a coluna do tiro (A-J)");
             String colunas = ler.next().toUpperCase();
 
-            System.out.println("Digite a linha do tiro (0-9):");
+            System.out.println("Digite a linha do tiro (0-9)");
             int linha = ler.nextInt();
 
             String alfabeto = "ABCDEFGHIJ";
@@ -233,7 +233,7 @@ public class naval {
             }
         }
 
-        if (acertouNavio && !verificarVitoria(tabuleiro)) { //! é utilizado para negar o resultado da função verificarVitoria(tabuleiro)
+        if (acertouNavio && !verificarVitoria(tabuleiro)) { 
             jogadaContraComputador(tabuleiro, simbolo);
         } else if (verificarVitoria(tabuleiro)) {
             System.out.println("========PARABENS==========");
@@ -320,12 +320,12 @@ public class naval {
                 if (tabuleiro[i][j] == 'w' || tabuleiro[i][j] == 'x' || tabuleiro[i][j] == 'y'
                         || tabuleiro[i][j] == 'z') {
                     if (tabuleiro[i][j] != '-') {
-                        return false; // Ainda há navios não afundados
+                        return false; 
                     }
                 }
             }
         }
-        return true; // Todos os navios foram afundados
+        return true; 
     }
 
 }

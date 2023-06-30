@@ -86,7 +86,7 @@ public class batalha {
                 boolean jogos = true;
 
                 while (jogos) {
-                    // Jogada do jogador
+                 
 
                     System.out.println();
 
@@ -95,7 +95,7 @@ public class batalha {
                     System.out.println("Sua vez de jogar jogador 1:");
                     n1.jogadaContraComputador(tabuleiro2, 'X');
 
-                    // Verificar se o jogador afundou todos os navios
+     
                     if (n1.verificarVitoria(tabuleiro2)) {
                         System.out.println("Parabéns! Você afundou todos os navios do computador.");
                         break;
@@ -103,13 +103,13 @@ public class batalha {
 
                     System.out.println();
 
-                    // Jogada do computador
+              
                     System.out.println("Tabuleiro do jogador");
                     n1.exibirTabuleiroSemBarcos(tabuleiro);
                     System.out.println("\nVez do computador:");
                     n1.jogadaComputador(tabuleiro, 'O');
 
-                    // Verificar se o computador afundou todos os navios do jogador
+               
                     if (n1.verificarVitoria(tabuleiro)) {
                         System.out.println("O computador afundou todos os seus navios. Fim de jogo.");
                         break;
@@ -188,21 +188,20 @@ public class batalha {
                     System.out.println("Sua vez de jogar: " + jogador1);
                     n1.jogada(tabuleiro2, 'X');
 
-                    // Verificar se o jogador 1 afundou todos os navios do jogador 2
                     if (n1.verificarVitoria(tabuleiro2)) {
                         System.out.println("Parabéns! " + jogador1 + " afundou todos os navios inimigos.");
                         jogo = false;
                         break;
                     }
 
-                    // Jogada do jogador 2
+          
                     System.out.println("Atire no campo " + jogador1);
                     System.out.println("Tabuleiro do  - " + jogador1);
                     n1.exibirTabuleiroSemBarcos(tabuleiro);
                     System.out.println("\nSua vez de jogar: " + jogador2);
                     n1.jogada(tabuleiro, 'O');
 
-                    // Verificar se o jogador 2 afundou todos os navios do jogador 1
+                    
                     if (n1.verificarVitoria(tabuleiro)) {
                         System.out.println("Parabéns! " + jogador2 + " afundou todos os navios inimigos.");
                         jogo = false;
