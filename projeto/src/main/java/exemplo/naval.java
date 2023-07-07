@@ -6,46 +6,8 @@ import java.util.Scanner;
 
 public class naval {
 
-    public static void alocarNaviosAutomaticamente(char[][] tabuleiro) {
-        Random random = new Random();
-
-        alocarNavio(tabuleiro, 4, random, 'w');
-
-        for (int i = 0; i < 2; i++) {
-            alocarNavio(tabuleiro, 3, random, 'x');
-        }
-
-        for (int i = 0; i < 3; i++) {
-            alocarNavio(tabuleiro, 2, random, 'y');
-        }
-
-        for (int i = 0; i < 4; i++) {
-            alocarNavio(tabuleiro, 1, random, 'z');
-        }
-    }
-
-    public static void alocarNaviosManualmente(char[][] tabuleiro) {
-        Scanner ler = new Scanner(System.in);
-
-        alocarNavio1(tabuleiro, 4, ler, 'w');
-
-        for (int i = 0; i < 2; i++) {
-            alocarNavio1(tabuleiro, 3, ler, 'x');
-        }
-
-        for (int i = 0; i < 3; i++) {
-            alocarNavio1(tabuleiro, 2, ler, 'y');
-        }
-
-        for (int i = 0; i < 4; i++) {
-            alocarNavio1(tabuleiro, 1, ler, 'z');
-        }
-    }
-
-    
     public static void alocarNavio(char[][] tabuleiro, int tamanho, Random aleatorio, char letra) {
         int coluna, linha;
-
         do {
             coluna = aleatorio.nextInt(10);
             linha = aleatorio.nextInt(10);
@@ -69,77 +31,74 @@ public class naval {
         return true;
     }
 
-    
+    public static void alocarNaviosAutomaticamente(char[][] tabuleiro) {
+        Random random = new Random();
+
+        alocarNavio(tabuleiro, 4, random, 'w');
+
+        for (int i = 0; i < 2; i++) {
+            alocarNavio(tabuleiro, 3, random, 'x');
+        }
+
+        for (int i = 0; i < 3; i++) {
+            alocarNavio(tabuleiro, 2, random, 'y');
+        }
+
+        for (int i = 0; i < 4; i++) {
+            alocarNavio(tabuleiro, 1, random, 'z');
+        }
+    }
+
     public static void alocarNavio1(char[][] tabuleiro, int tamanho, Scanner ler, char letra) {
         int linha, coluna;
         char orientacao;
-        boolean barcoAlocado = false;
-
+    
         do {
             System.out.println("Digite a coluna do navio (A-J):");
             String colunas = ler.next().toUpperCase();
-
+    
             System.out.println("Digite a linha do navio (0-9):");
             linha = ler.nextInt();
-
+    
             System.out.println("Digite a orientação do navio (H - horizontal, V - vertical):");
             orientacao = ler.next().toUpperCase().charAt(0);
-
+    
             String alfabeto = "ABCDEFGHIJ";
             coluna = alfabeto.indexOf(colunas);
-
-            boolean posicaoValida;
-            switch (orientacao) {
-                case 'H':
-                    posicaoValida = posicaoValidaHorizontal(tabuleiro, linha, coluna, tamanho);
-                    break;
-                case 'V':
-                    posicaoValida = posicaoValidaVertical(tabuleiro, linha, coluna, tamanho);
-                    break;
-                default:
-                    System.out.println("Orientação inválida");
-                    continue;
-            }
-
-            if (!posicaoValida) {
-                System.out.println("Posição inválida");
-                continue;
-            }
-
-            if (orientacao == 'H') {
-                for (int j = 0; j < tamanho; j++) {
-                    if (tabuleiro[linha][coluna + j] != '~') {
-                        System.out.println("Posição já ocupada por um navio, Tente Novamente ");
-                        barcoAlocado = false;
-                        break;
-                    }
-                }
-            } else {
-                for (int i = 0; i < tamanho; i++) {
-                    if (tabuleiro[linha + i][coluna] != '~') {
-                        System.out.println("Posição já ocupada por um navio. Tente novamente.");
-                        barcoAlocado = false;
-                        break;
-                    }
-                }
-            }
-
-            barcoAlocado = true;
-            break;
-        } while (true);
-
-        if (barcoAlocado) {
-            if (orientacao == 'H') {
+    
+            if (orientacao == 'H' && posicaoValidaHorizontal(tabuleiro, linha, coluna, tamanho)) {
                 for (int j = 0; j < tamanho; j++) {
                     tabuleiro[linha][coluna + j] = letra;
                 }
-            } else {
+                break;
+            } else if (orientacao == 'V' && posicaoValidaVertical(tabuleiro, linha, coluna, tamanho)) {
                 for (int i = 0; i < tamanho; i++) {
                     tabuleiro[linha + i][coluna] = letra;
                 }
+                break;
+            } else {
+                System.out.println("Jogada inválida. Tente novamente.");
             }
+        } while (true);
+        
+        exibirTabuleiro(tabuleiro);
+    }
 
-            exibirTabuleiro(tabuleiro);
+    public static void alocarNaviosManualmente(char[][] tabuleiro) {
+        Scanner ler = new Scanner(System.in);
+
+        alocarNavio1(tabuleiro, 4, ler, 'w');
+
+        for (int i = 0; i < 2; i++) {
+            alocarNavio1(tabuleiro, 3, ler, 'x');
+        }
+
+        for (int i = 0; i < 3; i++) {
+            alocarNavio1(tabuleiro, 2, ler, 'y');
+        }
+
+        for (int i = 0; i < 4; i++) {
+            alocarNavio1(tabuleiro, 1, ler, 'z');
         }
     }
 
@@ -161,13 +120,11 @@ public class naval {
         if (coluna + tamanho > 10) {
             return false;
         }
-
         for (int j = 0; j < tamanho; j++) {
             if (tabuleiro[linha][coluna + j] != '~') {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -187,56 +144,14 @@ public class naval {
         for (int i = 0; i < 10; i++) {
             System.out.print(i + " ");
             for (int j = 0; j < 10; j++) {
-                if (tabuleiro[i][j] == 'w' || tabuleiro[i][j] == 'x' || tabuleiro[i][j] == 'y' || tabuleiro[i][j] == 'z') {
+                if (tabuleiro[i][j] == 'w' || tabuleiro[i][j] == 'x' || tabuleiro[i][j] == 'y'
+                        || tabuleiro[i][j] == 'z') {
                     System.out.print("~ ");
                 } else {
                     System.out.print(tabuleiro[i][j] + " ");
                 }
             }
             System.out.println();
-        }
-    }
-
-    public void jogadaContraComputador(char[][] tabuleiro, char simbolo) {
-        Scanner ler = new Scanner(System.in);
-        boolean acertouNavio = false;
-        boolean Jogando = true;
-
-        while (Jogando) {
-            System.out.println("Digite a coluna do tiro (A-J)");
-            String colunas = ler.next().toUpperCase();
-
-            System.out.println("Digite a linha do tiro (0-9)");
-            int linha = ler.nextInt();
-
-            String alfabeto = "ABCDEFGHIJ";
-            int coluna = alfabeto.indexOf(colunas);
-
-            if (coluna == -1 || linha < 0 || linha >= 10) {
-                System.out.println("Posição inválida. Tente novamente.");
-                break;
-            }
-
-            if (tabuleiro[linha][coluna] == '~') {
-                System.out.println("Água!");
-                tabuleiro[linha][coluna] = '.';
-                Jogando = false;
-                break;
-            } else if (tabuleiro[linha][coluna] == 'w' || tabuleiro[linha][coluna] == 'x' || tabuleiro[linha][coluna] == 'y' || tabuleiro[linha][coluna] == 'z') {
-                System.out.println("Acertou um navio!");
-                tabuleiro[linha][coluna] = '-';
-                acertouNavio = true;
-                Jogando = false;
-                break;
-            } else {
-                System.out.println("Posição inválida. Tente novamente.");
-            }
-        }
-
-        if (acertouNavio && !verificarVitoria(tabuleiro)) { 
-            jogadaContraComputador(tabuleiro, simbolo);
-        } else if (verificarVitoria(tabuleiro)) {
-            System.out.println("========PARABENS==========");
         }
     }
 
@@ -255,7 +170,8 @@ public class naval {
             String alfabeto = "ABCDEFGHIJ";
             int coluna = alfabeto.indexOf(colunas);
 
-            if (coluna == -1 || linha < 0 || linha >= 10) {
+        
+            if (coluna < 0 || coluna >= 10 || linha < 0 || linha >= 10) {
                 System.out.println("Posição inválida. Tente novamente.");
                 break;
             }
@@ -264,7 +180,7 @@ public class naval {
                 System.out.println("Água!");
                 tabuleiro[linha][coluna] = '.';
                 break;
-            } else if (tabuleiro[linha][coluna] == 'w' || tabuleiro[linha][coluna] == 'x' || tabuleiro[linha][coluna] == 'y' || tabuleiro[linha][coluna] == 'z') {
+            } else if (tabuleiro[linha][coluna] == 'w' || tabuleiro[linha][coluna] == 'x'|| tabuleiro[linha][coluna] == 'y' || tabuleiro[linha][coluna] == 'z') {
                 System.out.println("Acertou um navio!");
                 tabuleiro[linha][coluna] = '-';
                 acertouNavio = true;
@@ -285,7 +201,7 @@ public class naval {
         Random posicao = new Random();
         boolean acertouNavio = false;
 
-        while (true) {
+        while (true) { //criar um loop infinito
             int coluna = posicao.nextInt(10);
             int linha = posicao.nextInt(10);
 
@@ -299,14 +215,13 @@ public class naval {
                 System.out.println("O computador errou o tiro!");
                 tabuleiro[linha][coluna] = '.';
                 break;
-            } else if (tabuleiro[linha][coluna] == 'w' || tabuleiro[linha][coluna] == 'x' || tabuleiro[linha][coluna] == 'y' || tabuleiro[linha][coluna] == 'z') {
+            } else if (tabuleiro[linha][coluna] == 'w' || tabuleiro[linha][coluna] == 'x'|| tabuleiro[linha][coluna] == 'y' || tabuleiro[linha][coluna] == 'z') {
                 System.out.println("O computador acertou um navio!");
                 tabuleiro[linha][coluna] = '-';
                 acertouNavio = true;
                 break;
             }
         }
-
         if (acertouNavio && !verificarVitoria(tabuleiro)) {
             jogadaComputador(tabuleiro, simbolo);
         } else if (verificarVitoria(tabuleiro)) {
@@ -317,15 +232,14 @@ public class naval {
     public static boolean verificarVitoria(char[][] tabuleiro) {
         for (int i = 0; i < tabuleiro.length; i++) {
             for (int j = 0; j < tabuleiro[i].length; j++) {
-                if (tabuleiro[i][j] == 'w' || tabuleiro[i][j] == 'x' || tabuleiro[i][j] == 'y'
-                        || tabuleiro[i][j] == 'z') {
+                if (tabuleiro[i][j] == 'w' || tabuleiro[i][j] == 'x' || tabuleiro[i][j] == 'y'|| tabuleiro[i][j] == 'z') {
                     if (tabuleiro[i][j] != '-') {
-                        return false; 
+                        return false;
                     }
                 }
             }
         }
-        return true; 
+        return true;
     }
 
 }

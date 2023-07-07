@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class batalha {
     public static void main(String[] args) {
 
+        Scanner ler = new Scanner(System.in);
+
         char[][] tabuleiro = new char[10][10];
         char[][] tabuleiro2 = new char[10][10];
         naval n1 = new naval();
@@ -20,11 +22,6 @@ public class batalha {
                 tabuleiro2[i][j] = '~';
             }
         }
-
-        // Exibindo o tabuleiro vazio
-        n1.exibirTabuleiro(tabuleiro);
-
-        Scanner ler = new Scanner(System.in);
 
         int modoJogo = 0;
         boolean modoValido = false;
@@ -73,6 +70,8 @@ public class batalha {
                     }
                 }
 
+                System.out.println();
+
                 System.out.println("Tabuleiro do jogador 1");
                 n1.exibirTabuleiro(tabuleiro);
 
@@ -87,15 +86,13 @@ public class batalha {
 
                 while (jogos) {
                  
-
                     System.out.println();
 
                     System.out.println("Tabuleiro da Maquina");
                     n1.exibirTabuleiroSemBarcos(tabuleiro2);
                     System.out.println("Sua vez de jogar jogador 1:");
-                    n1.jogadaContraComputador(tabuleiro2, 'X');
+                    n1.jogada(tabuleiro2, 'X');
 
-     
                     if (n1.verificarVitoria(tabuleiro2)) {
                         System.out.println("Parabéns! Você afundou todos os navios do computador.");
                         break;
@@ -103,7 +100,6 @@ public class batalha {
 
                     System.out.println();
 
-              
                     System.out.println("Tabuleiro do jogador");
                     n1.exibirTabuleiroSemBarcos(tabuleiro);
                     System.out.println("\nVez do computador:");
@@ -117,7 +113,6 @@ public class batalha {
                 }
 
                 break;
-
             case 2:
                 System.out.println("\nModo de jogo selecionado: Jogador vs. Jogador");
 
@@ -189,12 +184,11 @@ public class batalha {
                     n1.jogada(tabuleiro2, 'X');
 
                     if (n1.verificarVitoria(tabuleiro2)) {
-                        System.out.println("Parabéns! " + jogador1 + " afundou todos os navios inimigos.");
+                        System.out.println("Parabéns! " + jogador1 + " afundou todos os navios"+ jogador2 + "");
                         jogo = false;
                         break;
                     }
 
-          
                     System.out.println("Atire no campo " + jogador1);
                     System.out.println("Tabuleiro do  - " + jogador1);
                     n1.exibirTabuleiroSemBarcos(tabuleiro);
@@ -203,7 +197,7 @@ public class batalha {
 
                     
                     if (n1.verificarVitoria(tabuleiro)) {
-                        System.out.println("Parabéns! " + jogador2 + " afundou todos os navios inimigos.");
+                        System.out.println("Parabéns! " + jogador2 + " afundou todos os navios "+ jogador1 +"");
                         jogo = false;
                         break;
                     }
